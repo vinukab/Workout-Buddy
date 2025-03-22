@@ -2,11 +2,12 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const port = process.env.PORT;
 const workoutsRoutes = require("./routes/workoutRoute");
 
-app.get("/", (req, res) => { 
+app.get("/", (req, res) => {
   res.send("welcome to my server");
 });
 
@@ -14,6 +15,13 @@ app.get("/", (req, res) => {
 // parses it into a JavaScript object
 // attaches it to req.body.
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 // Middleware to parse URL-encoded requests
 app.use((req, res, next) => {
